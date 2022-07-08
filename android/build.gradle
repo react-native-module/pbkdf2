@@ -2,27 +2,28 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
-            jcenter()
+            mavenCentral()
         }
 
         dependencies {
-            classpath 'com.android.tools.build:gradle:3.5.3'
+          classpath("com.android.tools.build:gradle:7.0.4")
         }
     }
 }
 
-apply plugin: 'com.android.library'
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 android {
-    compileSdkVersion safeExtGet('Pbkdf2_compileSdkVersion', 29)
-    buildToolsVersion safeExtGet('Pbkdf2_buildToolsVersion', '29.0.2')
+    compileSdkVersion safeExtGet('Pbkdf2_compileSdkVersion', 31)
+    buildToolsVersion safeExtGet('Pbkdf2_buildToolsVersion', '31.0.0')
     defaultConfig {
-        minSdkVersion safeExtGet('Pbkdf2_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('Pbkdf2_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('Pbkdf2_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('Pbkdf2_targetSdkVersion', 31)
         versionCode 1
         versionName "1.0"
 
@@ -40,16 +41,23 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    testOptions {
+      unitTests.all {
+        useJUnitPlatform()
+      }
+    }
 }
 
 repositories {
     mavenLocal()
-    maven {
+    if (project != rootProject) {
+      maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url("$rootDir/../node_modules/react-native/android")
+      }
     }
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -58,4 +66,7 @@ dependencies {
     implementation 'com.madgag.spongycastle:core:1.58.0.0'
     implementation 'com.madgag.spongycastle:prov:1.54.0.0'
     implementation 'com.madgag.spongycastle:pg:1.54.0.0'
+    testImplementation "org.assertj:assertj-core:${safeExtGet('assertjVersion', '3.11.1')}"
+    testImplementation(platform("org.junit:junit-bom:5.8.2"))
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
