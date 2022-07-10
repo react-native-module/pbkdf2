@@ -9,6 +9,9 @@ buildscript {
           classpath("com.android.tools.build:gradle:7.0.4")
         }
     }
+    repositories {
+        mavenCentral()
+    }
 }
 
 //apply plugin: 'com.android.library'
@@ -69,4 +72,5 @@ dependencies {
     testImplementation "org.assertj:assertj-core:${safeExtGet('assertjVersion', '3.11.1')}"
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'commons-codec:commons-codec:1.15'
 }
