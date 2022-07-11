@@ -36,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/ex3ndr/react-native-fast-pbkdf2",
-  "author": "Steve Korshakov <steve@korshakov.com> (https://github.com/ex3ndr)",
+  "repository": "https://github.com/sacru2red/react-native-module-pbkdf2",
+  "author": "sacru2red <sacru2red@gmail.com> (https://github.com/sacru2red)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ex3ndr/react-native-fast-pbkdf2/issues"
+    "url": "https://github.com/sacru2red/react-native-module-pbkdf2/issues"
   },
-  "homepage": "https://github.com/ex3ndr/react-native-fast-pbkdf2#readme",
+  "homepage": "https://github.com/sacru2red/react-native-module-pbkdf2#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
