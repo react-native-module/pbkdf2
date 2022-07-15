@@ -8,7 +8,13 @@ export default function App() {
 
   React.useEffect(() => {
     (async () => {
-      let res = await Pbkdf2.derive('cGFzc3dvcmQ=', 'c2FsdA==', 1, 16, 'sha-256');
+      let res = await Pbkdf2.derive(
+        'cGFzc3dvcmQ=',
+        'c2FsdA==',
+        1,
+        16,
+        'sha-256'
+      );
       console.warn(res);
       setResult(res);
     })();
