@@ -8,6 +8,7 @@ const options = {
   env: process.env,
   stdio: 'inherit',
   encoding: 'utf-8',
+  shell: process.platform === 'win32' ? 'cmd.exe' : undefined,
 };
 
 let result;
