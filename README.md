@@ -14,7 +14,7 @@ npm install react-native-module-pbkdf2
 ## Usage
 
 ```js
-import Pbkdf2 from "react-native-fast-pbkdf2";
+import Pbkdf2 from "@react-native-module/pbkdf2";
 
 const password = 'cGFzc3dvcmQ=';
 const salt = 'c2FsdA==';

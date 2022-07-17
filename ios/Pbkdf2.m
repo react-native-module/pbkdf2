@@ -22,10 +22,10 @@ RCT_REMAP_METHOD(derive,
     NSData *saltData = [[NSData alloc] initWithBase64EncodedString:salt options:0];
     
     CCPseudoRandomAlgorithm prf = kCCPRFHmacAlgSHA1;
-    if ([hash isEqualToString:@"sha-512"]) {
+    if ([hash isEqualToString:@"sha512"]) {
         prf = kCCPRFHmacAlgSHA512;
     }
-    if ([hash isEqualToString:@"sha-256"]) {
+    if ([hash isEqualToString:@"sha256"]) {
         prf = kCCPRFHmacAlgSHA256;
     }
 
