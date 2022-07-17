@@ -37,9 +37,10 @@ export function pbkdf2(
     keylen,
     digest
   )
-    .then((base64Result: string) =>
-      callback(null, NodeBuffer.from(base64Result))
-    )
+    .then((base64Result: string) => {
+      console.log('base64Result', base64Result);
+      callback(null, NodeBuffer.from(base64Result));
+    })
     .catch((error: unknown) => {
       if (error instanceof Error || error === null) {
         callback(error, NodeBuffer.alloc(0));

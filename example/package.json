@@ -1,6 +1,6 @@
 {
-  "name": "react-native-fast-pbkdf2-example",
-  "description": "Example app for react-native-fast-pbkdf2",
+  "name": "react-native-module-pbkdf2-example",
+  "description": "Example app for @react-native-module/pbkdf2",
   "version": "0.0.1",
   "private": true,
   "scripts": {

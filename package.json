@@ -19,7 +19,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-fast-pbkdf2.podspec",
+    "react-native-module-pbkdf2.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",

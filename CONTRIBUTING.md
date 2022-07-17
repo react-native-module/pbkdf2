@@ -51,7 +51,7 @@ Remember to add tests for your change if possible. Run the unit tests by:
 yarn test
 ```
 
-To edit the Objective-C files, open `example/ios/Pbkdf2Example.xcworkspace` in XCode and find the source files at `Pods > Development Pods > react-native-fast-pbkdf2`.
+To edit the Objective-C files, open `example/ios/Pbkdf2Example.xcworkspace` in XCode and find the source files at `Pods > Development Pods > react-native-module-pbkdf2`.
 
 To edit the Kotlin files, open `example/android` in Android studio and find the source files at `reactnativepbkdf2` under `Android`.
 
