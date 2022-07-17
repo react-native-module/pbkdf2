@@ -38,7 +38,6 @@ export function pbkdf2(
     digest
   )
     .then((base64Result: string) => {
-      console.log('base64Result', base64Result);
       callback(null, NodeBuffer.from(base64Result));
     })
     .catch((error: unknown) => {
