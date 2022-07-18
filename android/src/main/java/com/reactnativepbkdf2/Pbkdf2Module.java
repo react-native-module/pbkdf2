@@ -1,11 +1,14 @@
 package com.reactnativepbkdf2;
 
-import android.support.annotation.NonNull;
+import android.util.Base64;
+
+import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.module.annotations.ReactModule;
 
 import org.spongycastle.crypto.Digest;
 import org.spongycastle.crypto.digests.SHA1Digest;
@@ -20,6 +23,7 @@ import org.spongycastle.crypto.params.KeyParameter;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 
+@ReactModule(name = Pbkdf2Module.NAME)
 public class Pbkdf2Module extends ReactContextBaseJavaModule {
   public static final String NAME = "Pbkdf2";
 
@@ -55,6 +59,9 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
     PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(digest);
     gen.init(password, salt, iterations);
     byte[] key = ((KeyParameter) gen.generateDerivedParameters(keySize * 8)).getKey();
+    // Cannot run on Test module or mock this
+    // import android.util.Base64;
+    // promise.resolve(Base64.encodeToString(key,Base64.DEFAULT));
     return toHex(key);
   }
 
@@ -78,7 +85,7 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
       case "ripemd160":
         return new RIPEMD160Digest();
       default:
-        throw new Error("Invalid digest");
+        throw new Error("Invalid digest:" + digestName.toLowerCase());
     }
   }
 

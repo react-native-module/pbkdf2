@@ -1,19 +1,25 @@
 {
-  "name": "react-native-fast-pbkdf2",
-  "version": "0.3.1",
-  "description": "PBKDF2 implementation",
+  "author": "sacru2red <sacru2red@gmail.com>",
+  "name": "@react-native-module/pbkdf2",
+  "description": "implementation of PBKDF2 for React Native",
+  "version": "0.4.0",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
+  "homepage": "https://github.com/react-native-module/pbkdf2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/react-native-module/pbkdf2.git"
+  },
   "files": [
     "src",
     "lib",
     "android",
     "ios",
     "cpp",
-    "react-native-fast-pbkdf2.podspec",
+    "react-native-module-pbkdf2.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -31,29 +37,15 @@
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
   },
-  "keywords": [
-    "react-native",
-    "ios",
-    "android"
-  ],
-  "repository": "https://github.com/sacru2red/react-native-module-pbkdf2",
-  "author": "sacru2red <sacru2red@gmail.com> (https://github.com/sacru2red)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sacru2red/react-native-module-pbkdf2/issues"
-  },
-  "homepage": "https://github.com/sacru2red/react-native-module-pbkdf2#readme",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/eslint-config": "^2.0.0",
+    "@react-native-community/eslint-config": "3.0.3",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.19",
     "@types/react-native": "0.62.13",
     "commitlint": "^11.0.0",
+    "cross-spawn": "^7.0.3",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-prettier": "^3.1.3",
@@ -70,6 +62,18 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "bugs": {
+    "url": "https://github.com/sacru2red/react-native-module-pbkdf2/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   },
   "jest": {
     "preset": "react-native",
@@ -148,5 +152,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "buffer": "^6.0.3"
   }
 }

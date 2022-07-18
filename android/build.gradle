@@ -2,31 +2,28 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
+            jcenter()
             mavenCentral()
         }
 
         dependencies {
-          classpath("com.android.tools.build:gradle:7.0.4")
+          classpath 'com.android.tools.build:gradle:3.6.4'
         }
-    }
-    repositories {
-        mavenCentral()
     }
 }
 
-//apply plugin: 'com.android.library'
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 android {
-    compileSdkVersion safeExtGet('Pbkdf2_compileSdkVersion', 31)
-    buildToolsVersion safeExtGet('Pbkdf2_buildToolsVersion', '31.0.0')
+    compileSdkVersion safeExtGet('Pbkdf2_compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('Pbkdf2_buildToolsVersion', '29.0.2')
     defaultConfig {
-        minSdkVersion safeExtGet('Pbkdf2_minSdkVersion', 21)
-        targetSdkVersion safeExtGet('Pbkdf2_targetSdkVersion', 31)
+        minSdkVersion safeExtGet('Pbkdf2_minSdkVersion', 16)
+        targetSdkVersion safeExtGet('Pbkdf2_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
 
@@ -45,21 +42,20 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     testOptions {
-      unitTests.all {
-        useJUnitPlatform()
-      }
+        unitTests.all {
+            useJUnitPlatform()
+        }
     }
 }
 
 repositories {
     mavenLocal()
-    if (project != rootProject) {
-      maven {
+    maven {
         // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
         url("$rootDir/../node_modules/react-native/android")
-      }
     }
     google()
+    jcenter()
     mavenCentral()
 }
 

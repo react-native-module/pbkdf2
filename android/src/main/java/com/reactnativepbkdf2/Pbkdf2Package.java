@@ -1,9 +1,8 @@
 package com.reactnativepbkdf2;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
@@ -21,12 +20,7 @@ public class Pbkdf2Package implements ReactPackage {
         return modules;
     }
 
-  @Override
-  public List<Class<? extends JavaScriptModule>> createJSModules() {
-    return null;
-  }
-
-  @NonNull
+    @NonNull
     @Override
     public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
         return Collections.emptyList();
