@@ -41,9 +41,23 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
     byte[] decodedPassword = password.getBytes(StandardCharsets.UTF_8);
     byte[] decodedSalt = salt.getBytes(StandardCharsets.UTF_8);
 
+    return pbkdf2Native(decodedPassword, decodedSalt, iterations, keySize, hash);
+  }
+
+  public static String pbkdf2Native(byte[] password, String salt, int iterations, int keySize, String hash) {
+    byte[] decodedSalt = salt.getBytes(StandardCharsets.UTF_8);
+    return pbkdf2Native(password, decodedSalt, iterations, keySize, hash);
+  }
+
+  public static String pbkdf2Native(String password, byte[] salt, int iterations, int keySize, String hash) {
+    byte[] decodedPassword = password.getBytes(StandardCharsets.UTF_8);
+    return pbkdf2Native(decodedPassword, salt, iterations, keySize, hash);
+  }
+
+  public static String pbkdf2Native(byte[] password, byte[] salt, int iterations, int keySize, String hash) {
     Digest digest = getDigestByName(hash);
     PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(digest);
-    gen.init(decodedPassword, decodedSalt, iterations);
+    gen.init(password, salt, iterations);
     byte[] key = ((KeyParameter) gen.generateDerivedParameters(keySize * 8)).getKey();
     // Cannot run on Test module or mock this
     // import android.util.Base64;
