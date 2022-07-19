@@ -2,6 +2,13 @@ import { NativeModules } from 'react-native';
 import { Buffer as NodeBuffer } from 'buffer';
 
 type BinaryLike = string | NodeJS.ArrayBufferView;
+type SupportDigest =
+  | 'sha1'
+  | 'sha256'
+  | 'sha512'
+  | 'sha224'
+  | 'sha384'
+  | 'ripemd160';
 
 export function binaryLikeToBase64(binaryLike: BinaryLike): string {
   if (typeof binaryLike === 'string') return binaryLike;
@@ -21,18 +28,12 @@ export function pbkdf2(
   salt: BinaryLike,
   iterations: number,
   keylen: number,
-  digest:
-    | 'sha1'
-    | 'sha256'
-    | 'sha512'
-    | 'sha224'
-    | 'sha384'
-    | 'ripemd160' = 'sha1',
+  digest: SupportDigest = 'sha1',
   callback: (err: Error | null, derivedKey: NodeBuffer) => void
 ): void {
   NativeModules.Pbkdf2.derive(
     binaryLikeToBase64(password),
-    salt,
+    binaryLikeToBase64(salt),
     iterations,
     keylen,
     digest
