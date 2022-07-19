@@ -11,22 +11,8 @@
   "homepage": "https://github.com/react-native-module/pbkdf2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-native-module/pbkdf2.git"
+    "url": "git+https://github.com/react-native-module/pbkdf2.git"
   },
-  "files": [
-    "src",
-    "lib",
-    "android",
-    "ios",
-    "cpp",
-    "react-native-module-pbkdf2.podspec",
-    "!lib/typescript/example",
-    "!android/build",
-    "!ios/build",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__"
-  ],
   "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
@@ -36,6 +22,9 @@
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
@@ -66,12 +55,30 @@
   "license": "MIT",
   "keywords": [
     "react-native",
+    "react native",
+    "pbkdf2",
+    "Crypto.pbkdf2",
     "ios",
-    "android"
+    "android",
+    "web"
   ],
   "bugs": {
-    "url": "https://github.com/sacru2red/react-native-module-pbkdf2/issues"
+    "url": "https://github.com/react-native-module/pbkdf2/issues"
   },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "react-native-module-pbkdf2.podspec",
+    "!lib/typescript/example",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -152,8 +159,5 @@
         }
       ]
     ]
-  },
-  "dependencies": {
-    "buffer": "^6.0.3"
   }
 }
