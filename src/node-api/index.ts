@@ -1,5 +1,5 @@
-import { NativeModules } from 'react-native';
 import { Buffer as NodeBuffer } from 'buffer';
+import { Environment } from '@react-native-module/utility';
 
 type BinaryLike = string | NodeJS.ArrayBufferView;
 type SupportDigest =
@@ -31,19 +31,25 @@ export function pbkdf2(
   digest: SupportDigest = 'sha1',
   callback: (err: Error | null, derivedKey: NodeBuffer) => void
 ): void {
-  NativeModules.Pbkdf2.derive(
-    binaryLikeToBase64(password),
-    binaryLikeToBase64(salt),
-    iterations,
-    keylen,
-    digest
-  )
-    .then((base64Result: string) => {
-      callback(null, NodeBuffer.from(base64Result));
-    })
-    .catch((error: unknown) => {
-      if (error instanceof Error || error === null) {
-        callback(error, NodeBuffer.alloc(0));
-      }
-    });
+  if (Environment === 'NativeMobile') {
+    const { NativeModules } = require('react-native');
+    NativeModules.Pbkdf2.derive(
+      binaryLikeToBase64(password),
+      binaryLikeToBase64(salt),
+      iterations,
+      keylen,
+      digest
+    )
+      .then((base64Result: string) => {
+        callback(null, NodeBuffer.from(base64Result));
+      })
+      .catch((error: unknown) => {
+        if (error instanceof Error || error === null) {
+          callback(error, NodeBuffer.alloc(0));
+        }
+      });
+  } else {
+    const { pbkdf2 } = require('pbkdf2');
+    pbkdf2(password, salt, iterations, keylen, digest, callback);
+  }
 }
