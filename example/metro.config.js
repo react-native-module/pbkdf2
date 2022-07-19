@@ -5,9 +5,7 @@ const pak = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 
-const modules = Object.keys({
-  ...pak.peerDependencies,
-});
+const modules = ['react', 'react-native']
 
 module.exports = {
   projectRoot: __dirname,

@@ -47,6 +47,8 @@
     "jest": "^28.1.1",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
     "release-it": "^15.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.77.0",
