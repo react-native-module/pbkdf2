@@ -1,5 +1,6 @@
 import { Buffer as NodeBuffer } from 'buffer';
 import { Environment } from '@react-native-module/utility';
+import { fromByteArray } from 'base64-js';
 
 type BinaryLike = string | NodeJS.ArrayBufferView;
 type SupportDigest =
@@ -12,13 +13,12 @@ type SupportDigest =
 
 export function binaryLikeToBase64(binaryLike: BinaryLike): string {
   if (typeof binaryLike === 'string') return binaryLike;
-
-  const newBuffer = NodeBuffer.alloc(binaryLike.byteLength);
-  const view = new Uint8Array(binaryLike.buffer);
-  for (let i = 0; i < newBuffer.length; ++i) {
-    newBuffer[i] = view[i];
-  }
-  return newBuffer.toString('base64');
+  const arrayBuffer = binaryLike.buffer.slice(
+    binaryLike.byteOffset,
+    binaryLike.byteOffset + binaryLike.byteLength
+  );
+  const base64 = fromByteArray(new Uint8Array(arrayBuffer));
+  return base64;
 }
 
 // Node API from @types/node
@@ -41,7 +41,7 @@ export function pbkdf2(
       digest
     )
       .then((base64Result: string) => {
-        callback(null, NodeBuffer.from(base64Result));
+        callback(null, NodeBuffer.from(base64Result, 'base64'));
       })
       .catch((error: unknown) => {
         if (error instanceof Error || error === null) {

@@ -17,7 +17,7 @@ export default inputSrc.map(([input, format, directoryName]) => {
       format,
     },
     preserveModules: true,
-    external: ['buffer', '@react-native-module/utility'],
+    external: ['@react-native-module/utility', 'base64-js', 'buffer', 'pbkdf2'],
     plugins: [
       typescript(),
       nodeResolve(),

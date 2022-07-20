@@ -1,28 +1,37 @@
-# react-native-module-pbkdf2
+# @react-native-module/pbkdf2
 
 PBKDF2 implementation for React Native
 
-* 🔨 Android and iOS native support
-* 🎨 Supports SHA-1, SHA-256, SHA-512
+- 🔨 Android and iOS native support
+- 🎨 Supports SHA-1, SHA-256, SHA-512
 
 ## Installation
 
-```sh
-npm install react-native-module-pbkdf2
+```
+npm install ---save @react-native-module/pbkdf2
+```
+
+```
+yarn add @react-native-module/pbkdf2
 ```
 
 ## Usage
 
 ```js
-import Pbkdf2 from "@react-native-module/pbkdf2";
+import { pbkdf2 } from '@react-native-module/pbkdf2';
 
 const password = 'cGFzc3dvcmQ=';
 const salt = 'c2FsdA==';
-const numberIterations = 1000;
-const keyLength = 16;
-let res = await Pbkdf2.derive(password, salt, numberIterations, keyLength, 'sha-256');
-// res is Base64 encoded key
-
+const iterations = 1000;
+const keylen = 16;
+const digest = 'sha256';
+pbkdf2(password, salt, iterations, keylen, digest, (err, derivedKey) => {
+  if (err) {
+    console.warn(err.message);
+  } else {
+    console.log(derivedKey); // derivedKey is Buffer
+  }
+});
 ```
 
 ## License

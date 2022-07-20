@@ -12,7 +12,7 @@ export default function App() {
       if (err) {
         console.warn(err.message);
       } else {
-        setResult(derivedKey.toString());
+        setResult(derivedKey.toString('hex'));
       }
     });
     pbkdf2(
@@ -25,7 +25,7 @@ export default function App() {
         if (err) {
           console.warn(err.message);
         } else {
-          setBufferResult(derivedKey.toString());
+          setBufferResult(derivedKey.toString('hex'));
         }
       }
     );
@@ -35,6 +35,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Result: {result}</Text>
       <Text>Buffer Result: {bufferResult}</Text>
+      <Text>Equal: {result === bufferResult ? 'OK' : 'Error'}</Text>
     </View>
   );
 }
