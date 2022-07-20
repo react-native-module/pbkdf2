@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { pbkdf2 } from '@react-native-module/pbkdf2';
 import { Buffer } from 'buffer';
+import { pbkdf2Sync } from '../../src/node-api';
 
 export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
@@ -14,7 +15,6 @@ export default function App() {
       if (err) {
         console.warn(err.message);
       } else {
-        console.log('derivedKey', derivedKey);
         setResult(derivedKey.toString('hex'));
       }
     });
@@ -44,6 +44,9 @@ export default function App() {
       <Text>
         Expected:
         {expected}
+      </Text>
+      <Text>
+        Sync: {pbkdf2Sync('password', 'salt', 1, 32, 'sha256').toString('hex')}
       </Text>
     </View>
   );
