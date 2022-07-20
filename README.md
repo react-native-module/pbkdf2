@@ -7,6 +7,8 @@ PBKDF2 implementation for React Native
 
 ## Installation
 
+This module has peerDependency "react-native"
+
 ```
 npm install ---save @react-native-module/pbkdf2
 ```
