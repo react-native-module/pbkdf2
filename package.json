@@ -27,7 +27,7 @@
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "dependencies": {
-    "@react-native-module/utility": "^0.0.3",
+    "@react-native-module/utility": "0.0.4-0",
     "base64-js": "^1.5.1",
     "buffer": "^6.0.3",
     "pbkdf2": "^3.1.2"

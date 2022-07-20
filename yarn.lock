@@ -1763,10 +1763,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
-"@react-native-module/utility@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@react-native-module/utility/-/utility-0.0.3.tgz#1d44f54c71e0c3cb2344980e4a64fe8a63f0f22e"
-  integrity sha512-kegzvQs1T/KjfdIkJR5j0uM7tEIInflcACdlEdyQusK4/QOr8WruLM88EWw4o8IwGAdXB+ZHMPY8ilnMwFy2RQ==
+"@react-native-module/utility@0.0.4-0":
+  version "0.0.4-0"
+  resolved "https://registry.yarnpkg.com/@react-native-module/utility/-/utility-0.0.4-0.tgz#8b91cd6ffaa5d124232481ea9c74a38986c5d0f2"
+  integrity sha512-Ivw1kiiyRmDW66dYwRJTRSiLx5m3K46N4pu0+BBxGQ0/6mQSx6gDA71pCaOAEUYzR564mugJhOZdA97suzyvKA==
 
 "@release-it/conventional-changelog@^2.0.0":
   version "2.0.1"
