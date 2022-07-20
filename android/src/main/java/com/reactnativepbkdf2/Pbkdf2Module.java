@@ -1,7 +1,5 @@
 package com.reactnativepbkdf2;
 
-import android.util.Base64;
-
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Promise;
@@ -10,6 +8,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
 
+import org.apache.commons.codec.binary.Base64;
 import org.spongycastle.crypto.Digest;
 import org.spongycastle.crypto.digests.SHA1Digest;
 import org.spongycastle.crypto.digests.SHA256Digest;
@@ -19,9 +18,6 @@ import org.spongycastle.crypto.digests.SHA384Digest;
 import org.spongycastle.crypto.digests.RIPEMD160Digest;
 import org.spongycastle.crypto.generators.PKCS5S2ParametersGenerator;
 import org.spongycastle.crypto.params.KeyParameter;
-
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 
 @ReactModule(name = Pbkdf2Module.NAME)
 public class Pbkdf2Module extends ReactContextBaseJavaModule {
@@ -38,19 +34,19 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
   }
 
   public static String pbkdf2Native(String password, String salt, int iterations, int keySize, String hash) {
-    byte[] decodedPassword = password.getBytes(StandardCharsets.UTF_8);
-    byte[] decodedSalt = salt.getBytes(StandardCharsets.UTF_8);
+    byte[] decodedPassword = Base64.decodeBase64(password);
+    byte[] decodedSalt = Base64.decodeBase64(salt);
 
     return pbkdf2Native(decodedPassword, decodedSalt, iterations, keySize, hash);
   }
 
   public static String pbkdf2Native(byte[] password, String salt, int iterations, int keySize, String hash) {
-    byte[] decodedSalt = salt.getBytes(StandardCharsets.UTF_8);
+    byte[] decodedSalt = salt.getBytes();
     return pbkdf2Native(password, decodedSalt, iterations, keySize, hash);
   }
 
   public static String pbkdf2Native(String password, byte[] salt, int iterations, int keySize, String hash) {
-    byte[] decodedPassword = password.getBytes(StandardCharsets.UTF_8);
+    byte[] decodedPassword = password.getBytes();
     return pbkdf2Native(decodedPassword, salt, iterations, keySize, hash);
   }
 
@@ -59,15 +55,7 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
     PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(digest);
     gen.init(password, salt, iterations);
     byte[] key = ((KeyParameter) gen.generateDerivedParameters(keySize * 8)).getKey();
-    // Cannot run on Test module or mock this
-    // import android.util.Base64;
-    // promise.resolve(Base64.encodeToString(key,Base64.DEFAULT));
-    return toHex(key);
-  }
-
-  private static String toHex(byte[] bytes) {
-    BigInteger bi = new BigInteger(1, bytes);
-    return String.format("%0" + (bytes.length << 1) + "x", bi);
+    return Base64.encodeBase64String(key);
   }
 
   private static Digest getDigestByName(String digestName) {

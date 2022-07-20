@@ -7,19 +7,22 @@ export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
   const [bufferResult, setBufferResult] = React.useState<string | undefined>();
 
+  const expected =
+    '120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b';
   React.useEffect(() => {
-    pbkdf2('cGFzc3dvcmQ=', 'c2FsdA==', 1, 16, 'sha256', (err, derivedKey) => {
+    pbkdf2('password', 'salt', 1, 32, 'sha256', (err, derivedKey) => {
       if (err) {
         console.warn(err.message);
       } else {
+        console.log('derivedKey', derivedKey);
         setResult(derivedKey.toString('hex'));
       }
     });
     pbkdf2(
-      Buffer.from('cGFzc3dvcmQ=', 'base64'),
-      Buffer.from('c2FsdA==', 'base64'),
+      Buffer.from('cGFzc3dvcmQ=', 'base64'), // password
+      Buffer.from('c2FsdA==', 'base64'), // salt
       1,
-      16,
+      32,
       'sha256',
       (err, derivedKey) => {
         if (err) {
@@ -33,9 +36,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>String Result: {result}</Text>
+      <Text>same Result: {result === expected ? 'Same' : 'Diff'}</Text>
       <Text>Buffer Result: {bufferResult}</Text>
+      <Text>same Buffer Result: {result === expected ? 'Same' : 'Diff'}</Text>
       <Text>Equal: {result === bufferResult ? 'OK' : 'Error'}</Text>
+      <Text>
+        Expected:
+        {expected}
+      </Text>
     </View>
   );
 }
@@ -43,8 +52,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   box: {
     width: 60,

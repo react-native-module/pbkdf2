@@ -12,7 +12,8 @@ type SupportDigest =
   | 'ripemd160';
 
 export function binaryLikeToBase64(binaryLike: BinaryLike): string {
-  if (typeof binaryLike === 'string') return binaryLike;
+  if (typeof binaryLike === 'string')
+    return NodeBuffer.from(binaryLike, 'utf-8').toString('base64');
   const arrayBuffer = binaryLike.buffer.slice(
     binaryLike.byteOffset,
     binaryLike.byteOffset + binaryLike.byteLength
