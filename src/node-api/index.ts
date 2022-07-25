@@ -71,8 +71,14 @@ export function pbkdf2(
       });
   } else {
     warnUnsupport();
-    const { pbkdf2: browserifyPbkdf2 } = require('pbkdf2');
-    browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
+    try {
+      const { pbkdf2: browserifyPbkdf2 } = require('pbkdf2/browser');
+      browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
+    } catch (error) {
+      if (error instanceof Error || error === null) {
+        callback(error, NodeBuffer.alloc(0));
+      }
+    }
   }
 }
 // function pbkdf2Sync(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string): Buffer;
@@ -94,7 +100,7 @@ export function pbkdf2Sync(
     return NodeBuffer.from(base64Result, 'base64');
   } else {
     warnUnsupport();
-    const { pbkdf2Sync: browserifyPbkdf2Sync } = require('pbkdf2');
+    const { pbkdf2Sync: browserifyPbkdf2Sync } = require('pbkdf2/browser');
     return browserifyPbkdf2Sync(password, salt, iterations, keylen, digest);
   }
 }
