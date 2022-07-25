@@ -71,8 +71,7 @@ export function pbkdf2(
       });
   } else {
     warnUnsupport();
-    const browserify = require('pbkdf2');
-    const { pbkdf2: browserifyPbkdf2 } = browserify;
+    const { pbkdf2: browserifyPbkdf2 } = require('pbkdf2');
     browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
   }
 }
@@ -84,7 +83,6 @@ export function pbkdf2Sync(
   keylen: number,
   digest: string
 ): NodeBuffer {
-  console.log('canUseNativeModule()', canUseNativeModule('deriveSync'));
   if (isSupport() && canUseNativeModule('deriveSync')) {
     const base64Result = NativeModules.Pbkdf2.deriveSync(
       binaryLikeToBase64(password),
@@ -96,8 +94,7 @@ export function pbkdf2Sync(
     return NodeBuffer.from(base64Result, 'base64');
   } else {
     warnUnsupport();
-    const browserify = require('pbkdf2');
-    const { pbkdf2Sync: browserifyPbkdf2Sync } = browserify;
+    const { pbkdf2Sync: browserifyPbkdf2Sync } = require('pbkdf2');
     return browserifyPbkdf2Sync(password, salt, iterations, keylen, digest);
   }
 }
