@@ -36,7 +36,11 @@ function isSupport(): boolean {
 }
 
 function canUseNativeModule(functionName: string): boolean {
-  return Boolean(NativeModules.Pbkdf2[functionName]);
+  try {
+    return Boolean(NativeModules.Pbkdf2[functionName]);
+  } catch (error) {
+    return false;
+  }
 }
 
 // Node API from @types/node
@@ -80,6 +84,7 @@ export function pbkdf2Sync(
   keylen: number,
   digest: string
 ): NodeBuffer {
+  console.log('canUseNativeModule()', canUseNativeModule('deriveSync'));
   if (isSupport() && canUseNativeModule('deriveSync')) {
     const base64Result = NativeModules.Pbkdf2.deriveSync(
       binaryLikeToBase64(password),
