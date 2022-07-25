@@ -24,6 +24,21 @@ export function binaryLikeToBase64(binaryLike: BinaryLike): string {
   return base64;
 }
 
+function warnUnsupport() {
+  if (Platform.OS === 'ios' && doWarn === false) {
+    doWarn = true;
+    console.warn('@react-native-module/pbkdf2 not support on IOS yet');
+  }
+}
+
+function isSupport(): boolean {
+  return Environment === 'NativeMobile' && Platform.OS === 'android';
+}
+
+function canUseNativeModule(functionName: string): boolean {
+  return Boolean(NativeModules.Pbkdf2[functionName]);
+}
+
 // Node API from @types/node
 // function pbkdf2(password: BinaryLike, salt: BinaryLike, iterations: number, keylen: number, digest: string, callback: (err: Error | null, derivedKey: Buffer) => void): void;
 export function pbkdf2(
@@ -34,7 +49,7 @@ export function pbkdf2(
   digest: SupportDigest = 'sha1',
   callback: (err: Error | null, derivedKey: NodeBuffer) => void
 ): void {
-  if (Environment === 'NativeMobile' && Platform.OS === 'android') {
+  if (isSupport() && canUseNativeModule('derive')) {
     NativeModules.Pbkdf2.derive(
       binaryLikeToBase64(password),
       binaryLikeToBase64(salt),
@@ -51,10 +66,7 @@ export function pbkdf2(
         }
       });
   } else {
-    if (Platform.OS === 'ios' && doWarn === false) {
-      doWarn = true;
-      console.warn('@react-native-module/pbkdf2 not support on IOS yet');
-    }
+    warnUnsupport();
     const browserify = require('pbkdf2');
     const { pbkdf2: browserifyPbkdf2 } = browserify;
     browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
@@ -68,7 +80,7 @@ export function pbkdf2Sync(
   keylen: number,
   digest: string
 ): NodeBuffer {
-  if (Environment === 'NativeMobile' && Platform.OS === 'android') {
+  if (isSupport() && canUseNativeModule('deriveSync')) {
     const base64Result = NativeModules.Pbkdf2.deriveSync(
       binaryLikeToBase64(password),
       binaryLikeToBase64(salt),
@@ -78,10 +90,7 @@ export function pbkdf2Sync(
     );
     return NodeBuffer.from(base64Result, 'base64');
   } else {
-    if (Platform.OS === 'ios' && doWarn === false) {
-      doWarn = true;
-      console.warn('@react-native-module/pbkdf2 not support on IOS yet');
-    }
+    warnUnsupport();
     const browserify = require('pbkdf2');
     const { pbkdf2Sync: browserifyPbkdf2Sync } = browserify;
     return browserifyPbkdf2Sync(password, salt, iterations, keylen, digest);
