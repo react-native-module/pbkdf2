@@ -30,7 +30,10 @@
     "@react-native-module/utility": "0.0.4-0",
     "base64-js": "^1.5.1",
     "buffer": "^6.0.3",
-    "pbkdf2": "^3.1.2"
+    "create-hash": "^1.2.0",
+    "ripemd160": "^2.0.2",
+    "safe-buffer": "^5.2.1",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
@@ -41,6 +44,8 @@
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/jest": "^26.0.0",
     "@types/react-native": "^0.69.3",
+    "@types/ripemd160": "^2.0.0",
+    "@types/sha.js": "^2.4.0",
     "commitlint": "^11.0.0",
     "cross-spawn": "^7.0.3",
     "eslint": "^7.2.0",
@@ -57,8 +62,8 @@
     "typescript": "^4.5.2"
   },
   "peerDependencies": {
-    "react-native": "*",
-    "react": "*"
+    "react": "*",
+    "react-native": "*"
   },
   "license": "MIT",
   "keywords": [

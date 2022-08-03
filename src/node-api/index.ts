@@ -2,6 +2,10 @@ import { Buffer as NodeBuffer } from 'buffer';
 import { NativeModules, Platform } from 'react-native';
 import { Environment } from '@react-native-module/utility';
 import { fromByteArray } from 'base64-js';
+import {
+  pbkdf2 as browserifyPbkdf2,
+  pbkdf2Sync as browserifyPbkdf2Sync,
+} from '../pbkdf2';
 
 let doWarn = false;
 type BinaryLike = string | NodeJS.ArrayBufferView;
@@ -72,7 +76,6 @@ export function pbkdf2(
   } else {
     warnUnsupport();
     try {
-      const { pbkdf2: browserifyPbkdf2 } = require('pbkdf2/browser');
       browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
     } catch (error) {
       if (error instanceof Error || error === null) {
@@ -100,7 +103,6 @@ export function pbkdf2Sync(
     return NodeBuffer.from(base64Result, 'base64');
   } else {
     warnUnsupport();
-    const { pbkdf2Sync: browserifyPbkdf2Sync } = require('pbkdf2/browser');
     return browserifyPbkdf2Sync(password, salt, iterations, keylen, digest);
   }
 }
