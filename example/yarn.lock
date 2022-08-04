@@ -1022,10 +1022,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-module/utility@^0.0.4-0":
-  version "0.0.4-0"
-  resolved "https://registry.npmjs.org/@react-native-module/utility/-/utility-0.0.4-0.tgz"
-  integrity sha512-Ivw1kiiyRmDW66dYwRJTRSiLx5m3K46N4pu0+BBxGQ0/6mQSx6gDA71pCaOAEUYzR564mugJhOZdA97suzyvKA==
+"@react-native-module/utility@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-module/utility/-/utility-0.1.0.tgz#73c7a3fd4e776033a7b43f259f5ca52e10956311"
+  integrity sha512-tQ4wljvLjTude5nDwPaMBWQ1iG6WhTRE4JZ87et3HQrpH/UaNEPls02XXQjgAwCkkvBGJ4Zmjbd2/7FMUu8EJQ==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.4"
