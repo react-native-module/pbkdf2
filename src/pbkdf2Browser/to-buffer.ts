@@ -1,6 +1,10 @@
-import { Buffer } from 'safe-buffer';
+import { Buffer } from 'buffer';
 
-export default function (thing, encoding, name) {
+export function toBuffer(
+  thing: Buffer | string | ArrayBuffer,
+  encoding: BufferEncoding | undefined,
+  name: string
+) {
   if (Buffer.isBuffer(thing)) {
     return thing;
   } else if (typeof thing === 'string') {

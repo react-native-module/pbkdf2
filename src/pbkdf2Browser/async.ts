@@ -1,10 +1,9 @@
-import checkParameters from './precondition';
-import defaultEncoding from './default-encoding';
-import sync from './sync';
-import toBuffer from './to-buffer';
-// var toBuffer = require('./to-buffer');
+import { checkParameters } from './precondition';
+import { defaultEncoding } from './default-encoding';
+import { sync } from './sync';
+import { toBuffer } from './to-buffer';
 
-var toBrowser = {
+var toBrowser: { [key: string]: string } = {
   'sha': 'SHA-1',
   'sha-1': 'SHA-1',
   'sha1': 'SHA-1',
@@ -15,34 +14,31 @@ var toBrowser = {
   'sha-512': 'SHA-512',
   'sha512': 'SHA-512',
 };
-var nextTick;
+interface callbackFunction {
+  (error: any, result: Buffer): any;
+}
+interface newTickFunction {
+  (callback: () => void): void;
+}
+
+var nextTick: newTickFunction;
 function getNextTick() {
   if (nextTick) {
     return nextTick;
   }
-  // nextTick(callback: Function, ...args: any[]): void;
   if (global.process && global.process.nextTick) {
     nextTick = global.process.nextTick;
-    // function queueMicrotask(callback: () => void): void
   } else if (global.queueMicrotask) {
     nextTick = global.queueMicrotask;
   } else if (global.setImmediate) {
-    // declare function setImmediate(handler: () => void): number;
-    // declare function setImmediate<Args extends any[]>(handler: (...args: Args) => void, ...args: Args): number;
     nextTick = global.setImmediate;
   } else {
-    // declare function setTimeout(handler: () => void, timeout: number): number;
-    // declare function setTimeout<Args extends any[]>(
-    //     handler: (...args: Args) => void,
-    //     timeout?: number,
-    //     ...args: Args
-    // ): number;
     nextTick = global.setTimeout;
   }
   return nextTick;
 }
 
-function resolvePromise(promise, callback) {
+function resolvePromise(promise: Promise<Buffer>, callback: callbackFunction) {
   promise.then(
     function (out) {
       getNextTick()(function () {
@@ -51,20 +47,27 @@ function resolvePromise(promise, callback) {
     },
     function (e) {
       getNextTick()(function () {
-        callback(e);
+        callback(e, Buffer.alloc(0));
       });
     }
   );
 }
 
-export default function (password, salt, iterations, keylen, digest, callback) {
+export function async(
+  password: Buffer,
+  salt: Buffer,
+  iterations: number,
+  keylen: number,
+  digest: string | undefined,
+  callback: (err: any, derivedKey: Buffer) => void
+) {
   if (typeof digest === 'function') {
     callback = digest;
     digest = undefined;
   }
 
   digest = digest || 'sha1';
-  var algo = toBrowser[digest.toLowerCase()];
+  var algo: any = toBrowser[digest.toLowerCase()];
 
   if (!algo || typeof global.Promise !== 'function') {
     getNextTick()(function () {
@@ -72,7 +75,7 @@ export default function (password, salt, iterations, keylen, digest, callback) {
       try {
         out = sync(password, salt, iterations, keylen, digest);
       } catch (e) {
-        return callback(e);
+        return callback(e, Buffer.alloc(0));
       }
       callback(null, out);
     });
@@ -85,5 +88,8 @@ export default function (password, salt, iterations, keylen, digest, callback) {
   if (typeof callback !== 'function')
     throw new Error('No callback provided to pbkdf2');
 
-  resolvePromise(sync(password, salt, iterations, keylen, digest), callback);
+  resolvePromise(
+    Promise.resolve(sync(password, salt, iterations, keylen, digest)),
+    callback
+  );
 }

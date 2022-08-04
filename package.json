@@ -31,8 +31,8 @@
     "base64-js": "^1.5.1",
     "buffer": "^6.0.3",
     "create-hash": "^1.2.0",
+    "events": "^3.3.0",
     "ripemd160": "^2.0.2",
-    "safe-buffer": "^5.2.1",
     "sha.js": "^2.4.11"
   },
   "devDependencies": {

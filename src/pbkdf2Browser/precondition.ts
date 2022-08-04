@@ -1,6 +1,6 @@
 var MAX_ALLOC = Math.pow(2, 30) - 1; // default in iojs
 
-export default function (iterations: number, keylen: number) {
+export function checkParameters(iterations: number, keylen: number) {
   if (typeof iterations !== 'number') {
     throw new TypeError('Iterations not a number');
   }

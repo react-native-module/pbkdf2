@@ -5,7 +5,7 @@ import { fromByteArray } from 'base64-js';
 import {
   pbkdf2 as browserifyPbkdf2,
   pbkdf2Sync as browserifyPbkdf2Sync,
-} from '../pbkdf2';
+} from '../pbkdf2Browser';
 
 let doWarn = false;
 type BinaryLike = string | NodeJS.ArrayBufferView;
@@ -17,13 +17,24 @@ type SupportDigest =
   | 'sha384'
   | 'ripemd160';
 
+function arrayBufferViewToArrayBuffer(arrayBufferView: NodeJS.ArrayBufferView) {
+  return arrayBufferView.buffer.slice(
+    arrayBufferView.byteOffset,
+    arrayBufferView.byteOffset + arrayBufferView.byteLength
+  );
+}
+
+function binaryLikeToBuffer(binaryLike: BinaryLike): Buffer {
+  if (typeof binaryLike === 'string')
+    return NodeBuffer.from(binaryLike, 'utf-8');
+  const arrayBuffer = arrayBufferViewToArrayBuffer(binaryLike);
+  return Buffer.from(arrayBuffer);
+}
+
 export function binaryLikeToBase64(binaryLike: BinaryLike): string {
   if (typeof binaryLike === 'string')
     return NodeBuffer.from(binaryLike, 'utf-8').toString('base64');
-  const arrayBuffer = binaryLike.buffer.slice(
-    binaryLike.byteOffset,
-    binaryLike.byteOffset + binaryLike.byteLength
-  );
+  const arrayBuffer = arrayBufferViewToArrayBuffer(binaryLike);
   const base64 = fromByteArray(new Uint8Array(arrayBuffer));
   return base64;
 }
@@ -55,7 +66,7 @@ export function pbkdf2(
   iterations: number,
   keylen: number,
   digest: SupportDigest = 'sha1',
-  callback: (err: Error | null, derivedKey: NodeBuffer) => void
+  callback: (err: any, derivedKey: NodeBuffer) => void
 ): void {
   if (isSupport() && canUseNativeModule('derive')) {
     NativeModules.Pbkdf2.derive(
@@ -76,7 +87,14 @@ export function pbkdf2(
   } else {
     warnUnsupport();
     try {
-      browserifyPbkdf2(password, salt, iterations, keylen, digest, callback);
+      browserifyPbkdf2(
+        binaryLikeToBuffer(password),
+        binaryLikeToBuffer(salt),
+        iterations,
+        keylen,
+        digest,
+        callback
+      );
     } catch (error) {
       if (error instanceof Error || error === null) {
         callback(error, NodeBuffer.alloc(0));
@@ -103,6 +121,12 @@ export function pbkdf2Sync(
     return NodeBuffer.from(base64Result, 'base64');
   } else {
     warnUnsupport();
-    return browserifyPbkdf2Sync(password, salt, iterations, keylen, digest);
+    return browserifyPbkdf2Sync(
+      binaryLikeToBuffer(password),
+      binaryLikeToBuffer(salt),
+      iterations,
+      keylen,
+      digest
+    );
   }
 }
