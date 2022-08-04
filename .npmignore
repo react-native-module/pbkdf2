@@ -1,1 +1,8 @@
 example
+local.properties
+.gradle
+.idea
+android/build
+android/gradle
+gradlew
+gradlew.bat

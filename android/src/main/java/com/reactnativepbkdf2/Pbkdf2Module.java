@@ -81,4 +81,9 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
   public void derive(String password, String salt, int iterations, int keySize, String hash, Promise promise) {
     promise.resolve(pbkdf2Native(password, salt, iterations, keySize, hash));
   }
+
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  public String deriveSync(String password, String salt, int iterations, int keySize, String hash) {
+    return pbkdf2Native(password, salt, iterations, keySize, hash);
+  }
 }

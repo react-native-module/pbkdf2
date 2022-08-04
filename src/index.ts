@@ -1,3 +1,3 @@
-import { pbkdf2 } from './node-api/index';
+import { pbkdf2, pbkdf2Sync } from './node-api/index';
 
-export { pbkdf2 };
+export { pbkdf2, pbkdf2Sync };

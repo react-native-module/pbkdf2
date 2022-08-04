@@ -2,13 +2,11 @@
   "author": "sacru2red <sacru2red@gmail.com>",
   "name": "@react-native-module/pbkdf2",
   "description": "implementation of PBKDF2 for React Native",
-  "version": "0.3.3",
+  "version": "0.4.1",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
-  "react-native": {
-    "pbkdf2": false
-  },
+  "react-native": "src/index",
   "source": "src/index",
   "homepage": "https://github.com/react-native-module/pbkdf2",
   "repository": {
@@ -27,10 +25,13 @@
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "dependencies": {
-    "@react-native-module/utility": "0.0.4-0",
+    "@react-native-module/utility": "0.1.0",
     "base64-js": "^1.5.1",
     "buffer": "^6.0.3",
-    "pbkdf2": "^3.1.2"
+    "create-hash": "^1.2.0",
+    "events": "^3.3.0",
+    "ripemd160": "^2.0.2",
+    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
@@ -40,6 +41,9 @@
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/jest": "^26.0.0",
+    "@types/react-native": "^0.69.3",
+    "@types/ripemd160": "^2.0.0",
+    "@types/sha.js": "^2.4.0",
     "commitlint": "^11.0.0",
     "cross-spawn": "^7.0.3",
     "eslint": "^7.2.0",
@@ -50,12 +54,13 @@
     "prettier": "^2.0.5",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "release-it": "15.0.0-esm.6",
+    "release-it": "^15.2.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.77.0",
     "typescript": "^4.5.2"
   },
   "peerDependencies": {
+    "react": "*",
     "react-native": "*"
   },
   "license": "MIT",

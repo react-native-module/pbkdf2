@@ -5,7 +5,7 @@ const pak = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 
-const modules = ['react', 'react-native']
+const modules = ['react', 'react-native'];
 
 module.exports = {
   projectRoot: __dirname,
