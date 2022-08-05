@@ -8,6 +8,7 @@ buildscript {
 
         dependencies {
           classpath 'com.android.tools.build:gradle:4.2.2'
+          classpath "com.facebook.react:react-native:0.20.1"
         }
     }
 }
@@ -68,5 +69,4 @@ dependencies {
     testImplementation "org.assertj:assertj-core:${safeExtGet('assertjVersion', '3.11.1')}"
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'commons-codec:commons-codec:1.15'
 }

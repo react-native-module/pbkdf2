@@ -2,9 +2,10 @@ package com.reactnativepbkdf2;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
+import android.util.Base64;
+
 import org.junit.jupiter.api.Test;
+import org.spongycastle.util.encoders.Hex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,21 +20,20 @@ class Unit {
   public HashMap<String, String> results;
 
   public static String UTF8ToBase64(String utf8String) {
-    return Base64.encodeBase64String(utf8String.getBytes());
+    return Base64.encodeToString(utf8String.getBytes(), Base64.DEFAULT);
   }
 
   public static String HexStringToBase64(String hexString) {
     try {
-      return Base64.encodeBase64String(
-        Hex.decodeHex(hexString.toCharArray())
+      return Base64.encodeToString(
+        Hex.decode(hexString),
+        Base64.DEFAULT
       );
     } catch (Exception e) {
       System.out.println(e);
       return "";
     }
   }
-
-
 
   public Unit(int iterations, int dkLen, HashMap<String, String> results) {
     this.iterations = iterations;
@@ -79,8 +79,8 @@ class UnitArray {
       }
     ));
     valid.add(new Unit(
-      Base64.encodeBase64String("password".getBytes()),
-      Base64.encodeBase64String("salt".getBytes()),
+      Unit.UTF8ToBase64("password"),
+      Unit.UTF8ToBase64("salt"),
       2,
       32,
       new HashMap<String, String>() {
@@ -95,8 +95,8 @@ class UnitArray {
       }
     ));
     valid.add(new Unit(
-      Base64.encodeBase64String("password".getBytes()),
-      Base64.encodeBase64String("salt".getBytes()),
+      Unit.UTF8ToBase64("password"),
+      Unit.UTF8ToBase64("salt"),
       1,
       64,
       new HashMap<String, String>() {
@@ -111,8 +111,8 @@ class UnitArray {
       }
     ));
     valid.add(new Unit(
-      Base64.encodeBase64String("password".getBytes()),
-      Base64.encodeBase64String("salt".getBytes()),
+      Unit.UTF8ToBase64("password"),
+      Unit.UTF8ToBase64("salt"),
       2,
       64,
       new HashMap<String, String>() {
@@ -127,8 +127,8 @@ class UnitArray {
       }
     ));
     valid.add(new Unit(
-      Base64.encodeBase64String("password".getBytes()),
-      Base64.encodeBase64String("salt".getBytes()),
+      Unit.UTF8ToBase64("password"),
+      Unit.UTF8ToBase64("salt"),
       4096,
       32,
       new HashMap<String, String>() {
@@ -143,8 +143,8 @@ class UnitArray {
       }
     ));
     valid.add(new Unit(
-      Base64.encodeBase64String("passwordPASSWORDpassword".getBytes()),
-      Base64.encodeBase64String("saltSALTsaltSALTsaltSALTsaltSALTsalt".getBytes()),
+      Unit.UTF8ToBase64("passwordPASSWORDpassword"),
+      Unit.UTF8ToBase64("saltSALTsaltSALTsaltSALTsaltSALTsalt"),
       4096,
       40,
       new HashMap<String, String>() {
