@@ -1,5 +1,7 @@
 package com.reactnativepbkdf2;
 
+import android.util.Base64;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Promise;
@@ -8,7 +10,10 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.module.annotations.ReactModule;
 
-import org.apache.commons.codec.binary.Base64;
+import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+
 import org.spongycastle.crypto.Digest;
 import org.spongycastle.crypto.digests.SHA1Digest;
 import org.spongycastle.crypto.digests.SHA256Digest;
@@ -34,8 +39,8 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
   }
 
   public static String pbkdf2Native(String password, String salt, int iterations, int keySize, String hash) {
-    byte[] decodedPassword = Base64.decodeBase64(password);
-    byte[] decodedSalt = Base64.decodeBase64(salt);
+    byte[] decodedPassword = android.util.Base64.decode(password, Base64.DEFAULT);
+    byte[] decodedSalt = android.util.Base64.decode(salt, Base64.DEFAULT);
 
     return pbkdf2Native(decodedPassword, decodedSalt, iterations, keySize, hash);
   }
@@ -55,7 +60,7 @@ public class Pbkdf2Module extends ReactContextBaseJavaModule {
     PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(digest);
     gen.init(password, salt, iterations);
     byte[] key = ((KeyParameter) gen.generateDerivedParameters(keySize * 8)).getKey();
-    return Base64.encodeBase64String(key);
+    return android.util.Base64.encodeToString(key, Base64.DEFAULT);
   }
 
   private static Digest getDigestByName(String digestName) {
